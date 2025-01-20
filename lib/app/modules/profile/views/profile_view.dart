@@ -28,7 +28,7 @@ class ProfileView extends GetView<ProfileController> {
       key: controller.key,
       appBar: AppBar(
         title: Text(
-          'Profil Kamu',
+          'Profil Kamus',
           style: TextStyle(
             color: Colors.white,
           ),
