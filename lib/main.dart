@@ -1,5 +1,7 @@
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -14,6 +16,12 @@ import 'app/routes/app_pages.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isAndroid) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+  }
 
   await Permission.manageExternalStorage.request();
   await Permission.camera.request();
@@ -35,7 +43,6 @@ Future<void> main() async {
       getPages: AppPages.routes,
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
-      
     ),
   );
 }
