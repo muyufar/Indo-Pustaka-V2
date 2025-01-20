@@ -1,0 +1,12 @@
+{
+    "buttons": {
+        "login": "Login",
+        "sign_in": "Masuk",
+        "logout": "Keluar",
+        "sign": {
+            "in_fb": "Masuk dengan Facebook",
+            "in_google": "Masuk dengan Google",
+            "in_apple": "Masuk dengan Apple"
+        }
+    }
+}

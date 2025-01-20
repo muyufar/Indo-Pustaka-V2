@@ -1,0 +1,13 @@
+{
+    "id_peminjaman_model": "PF22081000000000",
+    "kode_pinjam_fisik": "081000000000",
+    "id_buku_fisik": "B0000000000000003668",
+    "judul": "Contoh Judul Buku 3",
+    "penulis": "Contoh Penulis 3",
+    "penerbit": "Contoh Penerbit 3",
+    "status_peminjaman_fisik": "YB",
+    "tanggal_peminjaman_fisik": "2022-08-10 09:29:36",
+    "tanggal_exp_peminjaman_fisik": "20 Agustus 2022 9:29 WIB",
+    "jumlah_peminjaman_fisik": "1 Buku",
+    "cover": "http://103.137.254.78/driveuji_1TB/hdbaru_1TB/ipustaka_buku/pdf-icons//"
+}

@@ -1,0 +1,12 @@
+{
+    "buttons": {
+        "login": "Login",
+        "sign_in": "Sign-in",
+        "logout": "Logout",
+        "sign": {
+            "in_fb": "Sign-in with Facebook",
+            "in_google": "Sign-in with Google",
+            "in_apple": "Sign-in with Apple"
+        }
+    }
+}

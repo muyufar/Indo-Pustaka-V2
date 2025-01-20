@@ -1,0 +1,12 @@
+{
+    "buttons": {
+        "login": "Entrar",
+        "sign_in": "Cadastrar-se",
+        "logout": "Sair",
+        "sign": {
+            "in_fb": "Entrar com o Facebook",
+            "in_google": "Entrar com o Google",
+            "in_apple": "Entrar com a Apple"
+        }
+    }
+}
