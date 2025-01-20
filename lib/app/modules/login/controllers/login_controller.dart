@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:indopustaka/app/data/models/auth/login/login_response_model.dart';
 import 'package:indopustaka/app/data/models/resp_model.dart';
 import 'package:indopustaka/app/data/models/siswa/siswa_resp_model.dart';
@@ -14,6 +17,7 @@ import 'package:indopustaka/app/modules/login/login_model.dart';
 import 'package:indopustaka/app/modules/login/providers/login_provider.dart';
 import 'package:indopustaka/app/modules/profile/controllers/profile_controller.dart';
 import 'package:indopustaka/app/routes/app_pages.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginController extends GetxController with StateMixin<dynamic> {
   TextEditingController usernameController = TextEditingController();
@@ -95,11 +99,20 @@ class LoginController extends GetxController with StateMixin<dynamic> {
 
       Get.dialog(
         AlertDialog(
+          titleTextStyle: GoogleFonts.varelaRound(
+            color: HexColor('333333'),
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+          contentTextStyle: GoogleFonts.varelaRound(
+            color: HexColor('333333'),
+            fontSize: 14,
+          ),
           title: Text('Informasi'),
           content: Text(pesan.pesan!),
           actions: [
             ElevatedButton(
-              onPressed: () => Get.offNamed(Routes.login),
+              onPressed: () => Get.back(),
               child: Text('OK'),
             ),
           ],
@@ -112,16 +125,47 @@ class LoginController extends GetxController with StateMixin<dynamic> {
       Get.dialog(
         AlertDialog(
           title: Text('Informasi'),
-          content: Text(
-              'Periksa kembali user dan password, \natau cek kembali jaringan yang digunakan.'),
+          titleTextStyle: GoogleFonts.varelaRound(
+            color: HexColor('333333'),
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+          contentTextStyle: GoogleFonts.varelaRound(
+            color: HexColor('333333'),
+            fontSize: 14,
+          ),
+          content: Text('Cek kembali jaringan yang digunakan.'),
           actions: [
             ElevatedButton(
-              onPressed: () => Get.offNamed(Routes.login),
-              child: Text('OK'),
+              onPressed: () => Get.back(),
+              child: Text(
+                'OK',
+                style: GoogleFonts.jost(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
             ),
           ],
         ),
       );
     }
+  }
+
+  void btnHubungi() async {
+    profilCont.getCustomerService().then(
+      (value) async {
+        var url = "https://wa.me/+${value.nomorTelpon}";
+
+        if (Platform.isAndroid) {
+          await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+        } else if (Platform.isIOS) {
+          await launchUrl(Uri.parse(url),
+              mode: LaunchMode.externalNonBrowserApplication);
+        } else {
+          await launchUrl(Uri.parse(url));
+        }
+      },
+    );
   }
 }

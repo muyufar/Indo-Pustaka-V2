@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class ColorConstant {
   static Color shrinePink50 = Color(0xFFFEEAE6);
@@ -87,6 +88,9 @@ class ColorConstant {
   static Color bluegray400 = fromHex('#8c8c8c');
 
   static Color whiteA700 = fromHex('#ffffff');
+
+  static Color backgroundV2 = HexColor('FAF3E0');
+  static Color textBlackV2 = HexColor('333333');
 
   static Color fromHex(String hexString) {
     final buffer = StringBuffer();

@@ -22,23 +22,20 @@ class KategoriTag extends GetView {
     var jenjang = box.read(StringConstant.jenjang);
     var idSekolah = box.read(StringConstant.kodeSekolah);
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(21.0, 0.0, 21.0, 8.0),
-      child: Container(
-        height: 96.0,
-        width: Get.width,
-        child: jenisKategori.isCaseInsensitiveContains('perpus')
-            ? tagController.listPerpusBuild(
-                context,
-                idSekolah,
-                jenisKategori,
-              )
-            : tagController.listBuild(
-                context,
-                int.parse(jenjang),
-                jenisKategori,
-              ),
-      ),
+    return Container(
+      height: 40.0,
+      width: Get.width,
+      child: jenisKategori.isCaseInsensitiveContains('perpus')
+          ? tagController.listPerpusBuild(
+              context,
+              idSekolah,
+              jenisKategori,
+            )
+          : tagController.listBuild(
+              context,
+              int.parse(jenjang),
+              jenisKategori,
+            ),
     );
   }
 }

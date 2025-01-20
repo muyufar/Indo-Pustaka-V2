@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:indopustaka/app/data/models/menu/menu_model.dart';
 import 'package:indopustaka/app/data/models/menu/menu_resp_model.dart';
 
@@ -43,9 +45,7 @@ class HomeController extends GetxController with StateMixin<dynamic> {
       future: menuProvider.getMenu(menu),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Container(
-            child: _jobsListView(snapshot.data!),
-          );
+          return _jobsListView(snapshot.data!);
         } else if (snapshot.hasError) {
           return Center(
             child: Padding(
@@ -71,7 +71,11 @@ class HomeController extends GetxController with StateMixin<dynamic> {
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
+        childAspectRatio: 2 / 1.1,
+        crossAxisSpacing: 8.0,
+        mainAxisSpacing: 8.0,
       ),
+      physics: ClampingScrollPhysics(),
       itemCount: data.length,
       itemBuilder: (context, index) {
         return _tileView(data, index);
@@ -195,71 +199,111 @@ class HomeController extends GetxController with StateMixin<dynamic> {
             break;
         }
       },
-      child: Container(
-        padding: EdgeInsets.all(8.0),
-        child: Wrap(
-          children: [
-            Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(
-                      random.nextInt(255),
-                      random.nextInt(255),
-                      random.nextInt(255),
-                      1,
+      child: Card(
+        elevation: 3.0,
+        margin: EdgeInsets.zero,
+        child: Container(
+          padding: const EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CachedNetworkImage(
+                imageUrl: data[index].iconMenu!,
+                width: 40,
+                height: 40,
+                progressIndicatorBuilder: (context, url, downloadProgress) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
                     ),
-                    borderRadius: BorderRadius.circular(
-                      10.0,
-                    ),
-                  ),
-                  child: Wrap(
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8.0),
-                            child: CachedNetworkImage(
-                              width: 96,
-                              height: 96,
-                              fit: BoxFit.fill,
-                              imageUrl: data[index].iconMenu!,
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: downloadProgress.progress,
-                                  ),
-                                );
-                              },
-                              errorWidget: (context, url, error) {
-                                return Icon(Icons.error);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  );
+                },
+                errorWidget: (context, url, error) {
+                  return Icon(Icons.error);
+                },
+              ),
+              const Gap(7),
+              Text(
+                (data[index].namaMenu ?? '').capitalizeFirst ?? "",
+                style: GoogleFonts.varelaRound(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.0,
                 ),
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      data[index].namaMenu!,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
+      // child: Container(
+      //   padding: EdgeInsets.all(8.0),
+      //   child: Wrap(
+      //     children: [
+      //       Column(
+      //         children: [
+      //           Container(
+      //             decoration: BoxDecoration(
+      //               color: Color.fromRGBO(
+      //                 random.nextInt(255),
+      //                 random.nextInt(255),
+      //                 random.nextInt(255),
+      //                 1,
+      //               ),
+      //               borderRadius: BorderRadius.circular(
+      //                 10.0,
+      //               ),
+      //             ),
+      //             child: Wrap(
+      //               children: [
+      //                 Column(
+      //                   children: [
+      //                     Container(
+      //                       padding: EdgeInsets.all(15.0),
+      //                       child: CachedNetworkImage(
+      //                         width: 96,
+      //                         height: 96,
+      //                         fit: BoxFit.fill,
+      //                         imageUrl: data[index].iconMenu!,
+      //                         progressIndicatorBuilder:
+      //                             (context, url, downloadProgress) {
+      //                           return Center(
+      //                             child: CircularProgressIndicator(
+      //                               value: downloadProgress.progress,
+      //                             ),
+      //                           );
+      //                         },
+      //                         errorWidget: (context, url, error) {
+      //                           return Icon(Icons.error);
+      //                         },
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //           Container(
+      //             padding: EdgeInsets.all(8.0),
+      //             child: Center(
+      //               child: Text(
+      //                 data[index].namaMenu!,
+      //                 style: GoogleFonts.jost(
+      //                   fontWeight: FontWeight.w400,
+      //                   color: Colors.white,
+      //                   fontSize: 10.0,
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
