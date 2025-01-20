@@ -4,8 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:indopustaka/app/modules/menu_detail/providers/buku_menu_provider.dart';
 
 import 'package:indopustaka/app/routes/app_pages.dart';
@@ -129,171 +131,228 @@ class MenuDetailController extends GetxController with StateMixin<dynamic> {
   }
 
   Widget _tileView(List<dynamic> buku, int index) {
-    return Container(
-      padding: EdgeInsets.only(
-        left: 18.0,
-        right: 18.0,
-        bottom: 8.0,
-        top: 8.0,
-      ),
-      child: InkWell(
-        focusColor: Colors.grey,
-        onTap: () {
-          var param = {"id_buku": "${buku[index]['id_buku']}"};
-          Get.toNamed(Routes.bukuDetail, parameters: param);
-        },
-        child: Container(
-          width: Get.width,
-          height: Get.width / 2,
-          padding: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            color: Colors.red,
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Card(
-                    margin: EdgeInsets.zero,
-                    elevation: 3,
-                    child: Container(
-                      height: 120,
-                      width: Get.width,
-                      padding: const EdgeInsets.only(left: 40),
+    return Card(
+      elevation: 3,
+      margin: EdgeInsets.zero,
+      child: Container(
+        margin: EdgeInsets.only(
+          left: 15.0,
+          right: 15.0,
+          top: index == 0 ? 0 : 10,
+        ),
+        child: InkWell(
+          focusColor: Colors.grey,
+          onTap: () {
+            var param = {"id_buku": "${buku[index]['id_buku']}"};
+            Get.toNamed(Routes.bukuDetail, parameters: param);
+          },
+          child: Container(
+            width: Get.width,
+            height: Get.width / 2,
+            padding: EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    height: 120,
+                    width: Get.width,
+                    padding: const EdgeInsets.only(
+                      left: 120,
+                      right: 10,
+                      top: 10,
+                      bottom: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade300,
+                          blurRadius: 2,
+                          spreadRadius: 3,
+                          offset: Offset(0, 2),
+                        )
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(buku[index]['judul']),
-                          Text(buku[index]['penulis']),
-                          Text(buku[index]['sinopsis']),
+                          Text(
+                            buku[index]['judul'],
+                            maxLines: 2,
+                            overflow: TextOverflow.clip,
+                            style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.5,
+                            ),
+                          ),
+                          const Gap(5),
+                          Text(
+                            buku[index]['penulis'],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.varelaRound(
+                              fontSize: 10,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const Gap(5),
+                          Text(
+                            buku[index]['sinopsis'],
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.varelaRound(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ),
-              ),
-              AspectRatio(
-                aspectRatio: 2 / 3,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: CachedNetworkImage(
-                    errorListener: (value) => AspectRatio(
-                      aspectRatio: 2 / 3,
-                      child: Container(
-                        color: Colors.grey,
+                AspectRatio(
+                  aspectRatio: 1.5 / 2.2,
+                  child: Container(
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, -2),
+                        color: Colors.grey.shade100,
+                        spreadRadius: 2,
+                        blurRadius: 3,
+                      )
+                    ]),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                      ),
+                      child: CachedNetworkImage(
+                        errorListener: (value) => AspectRatio(
+                          aspectRatio: 1.5 / 2.2,
+                          child: Container(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        imageUrl: buku[index]['cover'],
+                        fit: BoxFit.fill,
                       ),
                     ),
-                    imageUrl: buku[index]['cover'],
-                    fit: BoxFit.cover,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            // child: Row(
+            //   mainAxisSize: MainAxisSize.min,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         border: Border.all(color: Colors.grey),
+            //         borderRadius: BorderRadius.all(
+            //           Radius.circular(10),
+            //         ),
+            //         color: Colors.grey,
+            //       ),
+            //       child: AspectRatio(
+            //         aspectRatio: 2 / 3,
+            //         child: ClipRRect(
+            //           borderRadius: BorderRadius.circular(10.0),
+            //           child: CachedNetworkImage(
+            //             width: 50,
+            //             height: 100,
+            //             fit: BoxFit.fill,
+            //             imageUrl: "${buku[index]['cover']}",
+            //             progressIndicatorBuilder:
+            //                 (context, url, downloadProgress) {
+            //               return Center(
+            //                 child: CircularProgressIndicator(
+            //                   value: downloadProgress.progress,
+            //                 ),
+            //               );
+            //             },
+            //             errorWidget: (context, url, error) {
+            //               return Icon(Icons.error);
+            //             },
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     Container(
+            //       width: Get.width / 2,
+            //       child: Column(
+            //         mainAxisSize: MainAxisSize.min,
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Container(
+            //             padding: EdgeInsets.only(
+            //               left: 8.0,
+            //               right: 8.0,
+            //             ),
+            //             child: Text(
+            //               "${buku[index]['judul']}",
+            //               maxLines: 2,
+            //               overflow: TextOverflow.ellipsis,
+            //               style: TextStyle(
+            //                 color: Colors.white,
+            //                 fontSize: 14.0,
+            //                 fontWeight: FontWeight.bold,
+            //               ),
+            //             ),
+            //           ),
+            //           Container(
+            //             padding: EdgeInsets.only(
+            //               left: 8.0,
+            //               right: 8.0,
+            //             ),
+            //             child: Text(
+            //               "${buku[index]['penulis']}",
+            //               maxLines: 1,
+            //               overflow: TextOverflow.ellipsis,
+            //               style: TextStyle(
+            //                 color: Colors.blue,
+            //                 fontSize: 10.0,
+            //               ),
+            //             ),
+            //           ),
+            //           Container(
+            //             padding: EdgeInsets.only(
+            //               left: 8.0,
+            //               right: 8.0,
+            //             ),
+            //             child: Text(""),
+            //           ),
+            //           Container(
+            //             padding: EdgeInsets.only(
+            //               left: 8.0,
+            //               right: 8.0,
+            //             ),
+            //             child: Text(
+            //               "${buku[index]['sinopsis']}",
+            //               maxLines: 4,
+            //               overflow: TextOverflow.ellipsis,
+            //               style: TextStyle(
+            //                 color: Colors.green,
+            //                 fontSize: 14.0,
+            //               ),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ),
-          // child: Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-          //     Container(
-          //       decoration: BoxDecoration(
-          //         border: Border.all(color: Colors.grey),
-          //         borderRadius: BorderRadius.all(
-          //           Radius.circular(10),
-          //         ),
-          //         color: Colors.grey,
-          //       ),
-          //       child: AspectRatio(
-          //         aspectRatio: 2 / 3,
-          //         child: ClipRRect(
-          //           borderRadius: BorderRadius.circular(10.0),
-          //           child: CachedNetworkImage(
-          //             width: 50,
-          //             height: 100,
-          //             fit: BoxFit.fill,
-          //             imageUrl: "${buku[index]['cover']}",
-          //             progressIndicatorBuilder:
-          //                 (context, url, downloadProgress) {
-          //               return Center(
-          //                 child: CircularProgressIndicator(
-          //                   value: downloadProgress.progress,
-          //                 ),
-          //               );
-          //             },
-          //             errorWidget: (context, url, error) {
-          //               return Icon(Icons.error);
-          //             },
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     Container(
-          //       width: Get.width / 2,
-          //       child: Column(
-          //         mainAxisSize: MainAxisSize.min,
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           Container(
-          //             padding: EdgeInsets.only(
-          //               left: 8.0,
-          //               right: 8.0,
-          //             ),
-          //             child: Text(
-          //               "${buku[index]['judul']}",
-          //               maxLines: 2,
-          //               overflow: TextOverflow.ellipsis,
-          //               style: TextStyle(
-          //                 color: Colors.white,
-          //                 fontSize: 14.0,
-          //                 fontWeight: FontWeight.bold,
-          //               ),
-          //             ),
-          //           ),
-          //           Container(
-          //             padding: EdgeInsets.only(
-          //               left: 8.0,
-          //               right: 8.0,
-          //             ),
-          //             child: Text(
-          //               "${buku[index]['penulis']}",
-          //               maxLines: 1,
-          //               overflow: TextOverflow.ellipsis,
-          //               style: TextStyle(
-          //                 color: Colors.blue,
-          //                 fontSize: 10.0,
-          //               ),
-          //             ),
-          //           ),
-          //           Container(
-          //             padding: EdgeInsets.only(
-          //               left: 8.0,
-          //               right: 8.0,
-          //             ),
-          //             child: Text(""),
-          //           ),
-          //           Container(
-          //             padding: EdgeInsets.only(
-          //               left: 8.0,
-          //               right: 8.0,
-          //             ),
-          //             child: Text(
-          //               "${buku[index]['sinopsis']}",
-          //               maxLines: 4,
-          //               overflow: TextOverflow.ellipsis,
-          //               style: TextStyle(
-          //                 color: Colors.green,
-          //                 fontSize: 14.0,
-          //               ),
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ),
       ),
     );
